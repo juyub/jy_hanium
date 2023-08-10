@@ -6,7 +6,7 @@
 <br>
 GENDER_LIST = ['Male', 'Female'] <br>
 AGE_INTERVALS = ['(0, 2)', '(4, 6)', '(8, 12)', '(15, 20)',
-                 '(25, 32)', '(38, 43)', '(48, 53)', '(60, 100)'] <br>
- <br> 
+                 '(25, 32)', '(38, 43)', '(48, 53)', '(60, 100)'] <br><br>
+
 - crowdedness9_count_video.py
 <img src="https://github.com/juyub/jy_hanium/assets/126839881/cf7c73f7-9559-4663-a3a3-b2da88f0b296" width="300" /> 
