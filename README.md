@@ -1,11 +1,13 @@
 # 한이음 프로젝트
+
+
+<img src="https://github.com/juyub/jy_hanium/assets/126839881/5cf7f10a-a51e-44b8-a3ab-ca6d0a5abd1e" /> <br>
+
 <!-- https://youtu.be/zAsswCBUrts --!>
 [![Video Label](http://img.youtube.com/vi/zAsswCBUrts/0.jpg)](https://youtu.be/zAsswCBUrts)
 <br>
 이미지를 클릭하면 유튜브 시현영상과 연결됩니다
 <br>
-
-<img src="https://github.com/juyub/jy_hanium/assets/126839881/5cf7f10a-a51e-44b8-a3ab-ca6d0a5abd1e" /> <br>
 
 - age_and_gender_detection.py <br>
 <img src="https://github.com/juyub/jy_hanium/assets/126839881/55b8e2d0-13ba-4170-a939-3629fd2d5642" width="300" /> <br>
