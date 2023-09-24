@@ -1,7 +1,7 @@
 # 한이음 프로젝트
 
 
-<img src="https://github.com/juyub/jy_hanium/assets/126839881/5cf7f10a-a51e-44b8-a3ab-ca6d0a5abd1e" /> 
+<img src="https://github.com/juyub/jy_hanium/assets/126839881/bfe2e9a6-12f6-4e73-b31f-0a6c68ab3e34" /> 
 <br><br>
 
 [![Video Label](http://img.youtube.com/vi/zAsswCBUrts/0.jpg)](https://youtu.be/zAsswCBUrts)
