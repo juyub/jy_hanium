@@ -3,12 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        var dataByDate = {{ data_by_date|tojson }};
+        var itemsPerPage = 14;
+        var currentPage = 1;
+
+<!--        function renderTable() {-->
+<!--            var startIndex = (currentPage - 1) * itemsPerPage;-->
+<!--            var endIndex = startIndex + itemsPerPage;-->
+<!--            var dataToDisplay = dataByDate.slice(startIndex, endIndex);-->
+
+<!--            var tableBody = '';-->
+<!--            for (var i = 0; i < dataToDisplay.length; i++) {-->
+<!--                var row = dataToDisplay[i];-->
+<!--                tableBody += '<tr><td>' + row[0] + '</td><td>' + (row[1] === 1 ? 'male' : 'female') + '</td><td>' + row[2] + '</td></tr>';-->
+<!--            }-->
+
+<!--            $('#data-by-date-table tbody').html(tableBody);-->
+<!--        }-->
+
+        function renderTable() {
+            var startIndex = (currentPage - 1) * itemsPerPage;
+            var endIndex = startIndex + itemsPerPage;
+            var dataToDisplay = dataByDate.slice(startIndex, endIndex);
+
+            var tableBody = '';
+            for (var i = 0; i < dataToDisplay.length; i++) {
+                var row = dataToDisplay[i];
+                tableBody += '<tr><td>';
+                if (i === 0 || dataToDisplay[i - 1][0] !== row[0]) {
+                    tableBody += row[0];
+                }
+                tableBody += '</td><td>' + (row[1] === 1 ? 'male' : 'female') + '</td><td>' + row[2] + '</td></tr>';
+            }
+
+            $('#data-by-date-table tbody').html(tableBody);
+        }
+
+        $('#prev-page').click(function() {
+            if (currentPage > 1) {
+                currentPage--;
+                renderTable();
+            }
+        });
+
+        $('#next-page').click(function() {
+            if (currentPage * itemsPerPage < dataByDate.length) {
+                currentPage++;
+                renderTable();
+            }
+        });
+
+        renderTable();
+    });
+</script>
+<style>
+.table-style {
+    text-align: center;
+<!--    padding:10px;-->
+}
+</style>
 </head>
 <body>
+
 <div>
-<form action="/data" method="post">
-    <input type="submit" value="Data">
-</form>
+    <input type="button" value="MAIN" onclick="location.href='/'">
 </div><br>
 
 <div>
@@ -30,6 +92,99 @@
             </tr>
         </table>
     </form>
+</div><br>
+
+<!--<div style="display: flex; justify-content: space-between;">-->
+<!--    <img style="width: 28%;" src="/static/daily_visitors.png" alt="Daily Visitors">-->
+<!--    <img style="width: 28%;" src="/static/hourly_visitors.png" alt="Hourly Visitors">-->
+<!--    <img style="width: 28%;" src="/static/age_gender_distribution.png" alt="Age and Gender Distribution">-->
+<!--    <img style="width: 16%; object-fit: contain;" src="/static/gender_distribution.png" alt="Gender Distribution">-->
+<!--</div>-->
+<div style="display: flex; justify-content: space-between;">
+    <img style="width: 28%;" src="data:image/png;base64,{{ line_date_url }}">
+    <img style="width: 28%;" src="data:image/png;base64,{{ line_hourly_url }}">
+    <img style="width: 28%;" src="data:image/png;base64,{{ bar_age_gender_url }}">
+    <img style="width: 16%; object-fit: contain;" src="data:image/png;base64,{{ pie_gender_url }}">
+</div>
+<br>
+<div style="display: flex; justify-content: space-between;">
+    <div style="width: 25%;">
+        <table id="data-by-date-table" class="table-style" style="margin: 10px;">
+            <thead>
+                <tr>
+                    <th>Visit Date</th>
+                    <th>Gender</th>
+                    <th>Count</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <button id="prev-page"><<</button>
+        <button id="next-page">>></button>
+    </div>
+    <div style="width: 25%;">
+        <table class="table-style">
+            <tr>
+                <th>Visit Hour</th>
+                <th>Gender</th>
+                <th>Avg</th>
+            </tr>
+            {% for row in hourly_data %}
+            <tr>
+                <td>
+                    {% if loop.index0 == 0 or hourly_data[loop.index0 - 1][0] != row[0] %}
+                    {{ row[0] }}
+                    {% endif %}
+                </td>
+                <td>{{ 'male' if row[1] == 1 else 'female' }}</td>
+                <td>{{ row[2] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <div style="width: 25%;">
+        <table sclass="table-style">
+            <tr>
+                <th>Age Group</th>
+                <th>Gender</th>
+                <th>Count</th>
+            </tr>
+            {% for row in age_gender_dist %}
+            <tr>
+                <td>
+                    {% if loop.index0 == 0 or age_gender_dist[loop.index0 - 1][0] != row[0] %}
+                        {% if row[0] == 1 %} 0 - 2
+                        {% elif row[0] == 2 %} 4 - 6
+                        {% elif row[0] == 3 %} 8 - 12
+                        {% elif row[0] == 4 %} 15 - 20
+                        {% elif row[0] == 5 %} 25 - 32
+                        {% elif row[0] == 6 %} 38 - 43
+                        {% elif row[0] == 7 %} 48 - 53
+                        {% elif row[0] == 8 %} 60 - 100
+                        {% endif %}
+                    {% endif %}
+                </td>
+                <td>{{ 'male' if row[1] == 1 else 'female' }}</td>
+                <td>{{ row[2] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <div style="width: 25%;">
+        <table class="table-style">
+            <tr>
+                <th>Gender</th>
+                <th>Count</th>
+            </tr>
+            {% for row in gender_dist %}
+            <tr>
+                <td>{{ 'male' if row[0] == 1 else 'female' }}</td>
+                <td>{{ row[1] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
 </div>
 
 </body>
