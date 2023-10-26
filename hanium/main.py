@@ -73,14 +73,16 @@ def daily_visitors():
     age_gender_dist = DAO.get_age_gender_distribution(start_date, end_date)
     gender_dist = DAO.get_gender_distribution(start_date, end_date)
 
-    graph.line_graph_by_date(data_by_date)
-    graph.create_line_graph(hourly_data)
-    graph.bar_graph_by_age(age_gender_dist)
-    graph.create_pie_chart(gender_dist)
+    line_date_url = graph.line_graph_date(data_by_date)
+    line_hourly_url = graph.line_graph_hour(hourly_data)
+    bar_age_gender_url = graph.bar_graph_by_ag(age_gender_dist)
+    pie_gender_url = graph.pie_chart_gend(gender_dist)
 
     return render_template('graph.html',
                            data_by_date=data_by_date, hourly_data=hourly_data,
-                           age_gender_dist=age_gender_dist, gender_dist=gender_dist)
+                           age_gender_dist=age_gender_dist, gender_dist=gender_dist,
+                           line_date_url=line_date_url, line_hourly_url=line_hourly_url,
+                           bar_age_gender_url=bar_age_gender_url, pie_gender_url=pie_gender_url)
 
 
 if __name__ == "__main__":
