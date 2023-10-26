@@ -124,7 +124,7 @@ def bar_graph_by_ag(data):
     return graph_url
 
 
-def pie_chart_gen(gender_dist):
+def pie_chart_gend(gender_dist):
     genders = ['Male' if data[0] == 1 else 'Female' for data in gender_dist]
     counts = [data[1] for gender in genders for data in gender_dist if
               (gender == 'Male' and data[0] == 1) or (gender == 'Female' and data[0] == 2)]
