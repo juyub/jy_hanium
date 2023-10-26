@@ -1,3 +1,6 @@
+import io
+import urllib
+import base64
 import pandas as pd
 from datetime import datetime
 import matplotlib.pyplot as plt
@@ -5,7 +8,7 @@ import matplotlib
 matplotlib.use('Agg')
 
 
-def line_graph_by_date(data_by_date):
+def line_graph_date(data_by_date):
     # Separate data by gender
     male_data = [data for data in data_by_date if data[1] == 1]
     female_data = [data for data in data_by_date if data[1] == 2]
@@ -39,13 +42,23 @@ def line_graph_by_date(data_by_date):
     plt.legend()
 
     # Save the figure to 'static' directory
-    plt.savefig('static/daily_visitors.png')
+    # plt.savefig('static/daily_visitors.png')
+
+    #
+    img = io.BytesIO()
+    plt.savefig(img, format='png')
 
     # Clear the current figure
     plt.clf()
 
+    #
+    img.seek(0)
+    graph_url = urllib.parse.quote(base64.b64encode(img.read()).decode())
 
-def create_line_graph(hourly_data):
+    return graph_url
+
+
+def line_graph_hour(hourly_data):
     hours = sorted(list(set([data[0] for data in hourly_data])))
     male_counts = [data[2] for data in hourly_data if data[1] == 1]
     female_counts = [data[2] for data in hourly_data if data[1] == 2]
@@ -56,13 +69,23 @@ def create_line_graph(hourly_data):
     plt.legend()
 
     # Save the figure to 'static' directory
-    plt.savefig('static/hourly_visitors.png')
+    # plt.savefig('static/hourly_visitors.png')
+
+    #
+    img = io.BytesIO()
+    plt.savefig(img, format='png')
 
     # Clear the current figure
     plt.clf()
 
+    #
+    img.seek(0)
+    graph_url = urllib.parse.quote(base64.b64encode(img.read()).decode())
 
-def bar_graph_by_age(data):
+    return graph_url
+
+
+def bar_graph_by_ag(data):
     # Convert raw data to DataFrame
     df = pd.DataFrame(data, columns=['AGE_GROUP_ID', 'GENDER_ID', 'a_g_count'])
 
@@ -85,12 +108,23 @@ def bar_graph_by_age(data):
     plt.xticks(rotation=0)
     plt.xlabel('')
 
-    plt.savefig('static/age_gender_distribution.png')
+    # plt.savefig('static/age_gender_distribution.png')
 
+    #
+    img = io.BytesIO()
+    plt.savefig(img, format='png')
+
+    # Clear the current figure
     plt.clf()
 
+    #
+    img.seek(0)
+    graph_url = urllib.parse.quote(base64.b64encode(img.read()).decode())
 
-def create_pie_chart(gender_dist):
+    return graph_url
+
+
+def pie_chart_gen(gender_dist):
     genders = ['Male' if data[0] == 1 else 'Female' for data in gender_dist]
     counts = [data[1] for gender in genders for data in gender_dist if
               (gender == 'Male' and data[0] == 1) or (gender == 'Female' and data[0] == 2)]
@@ -98,6 +132,17 @@ def create_pie_chart(gender_dist):
     # Create pie chart
     plt.pie(counts, labels=genders)
 
-    plt.savefig('static/gender_distribution.png')
+    # plt.savefig('static/gender_distribution.png')
 
+    #
+    img = io.BytesIO()
+    plt.savefig(img, format='png')
+
+    # Clear the current figure
     plt.clf()
+
+    #
+    img.seek(0)
+    graph_url = urllib.parse.quote(base64.b64encode(img.read()).decode())
+
+    return graph_url
