@@ -94,11 +94,17 @@
     </form>
 </div><br>
 
+<!--<div style="display: flex; justify-content: space-between;">-->
+<!--    <img style="width: 28%;" src="/static/daily_visitors.png" alt="Daily Visitors">-->
+<!--    <img style="width: 28%;" src="/static/hourly_visitors.png" alt="Hourly Visitors">-->
+<!--    <img style="width: 28%;" src="/static/age_gender_distribution.png" alt="Age and Gender Distribution">-->
+<!--    <img style="width: 16%; object-fit: contain;" src="/static/gender_distribution.png" alt="Gender Distribution">-->
+<!--</div>-->
 <div style="display: flex; justify-content: space-between;">
-    <img style="width: 28%;" src="/static/daily_visitors.png" alt="Daily Visitors">
-    <img style="width: 28%;" src="/static/hourly_visitors.png" alt="Hourly Visitors">
-    <img style="width: 28%;" src="/static/age_gender_distribution.png" alt="Age and Gender Distribution">
-    <img style="width: 16%; object-fit: contain;" src="/static/gender_distribution.png" alt="Gender Distribution">
+    <img style="width: 28%;" src="data:image/png;base64,{{ line_date_url }}">
+    <img style="width: 28%;" src="data:image/png;base64,{{ line_hourly_url }}">
+    <img style="width: 28%;" src="data:image/png;base64,{{ bar_age_gender_url }}">
+    <img style="width: 16%; object-fit: contain;" src="data:image/png;base64,{{ pie_gender_url }}">
 </div>
 <br>
 <div style="display: flex; justify-content: space-between;">
